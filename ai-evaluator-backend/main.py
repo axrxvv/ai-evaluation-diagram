@@ -1,4 +1,4 @@
-from fastapi import FastAPI, UploadFile, File
+from fastapi import FastAPI, UploadFile, File, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from dotenv import load_dotenv
 from openai import OpenAI
@@ -9,7 +9,11 @@ import os
 load_dotenv()
 
 # Initialize OpenAI client
-client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
+api_key = os.getenv("OPENAI_API_KEY")
+if not api_key:
+    raise RuntimeError("OPENAI_API_KEY is missing from environment variables")
+
+client = OpenAI(api_key=api_key)
 
 # Create FastAPI app
 app = FastAPI()
@@ -34,30 +38,37 @@ async def test():
 # Image analysis route
 @app.post("/analyze")
 async def analyze_diagram(file: UploadFile = File(...)):
-    # Read and encode image to base64
-    image_bytes = await file.read()
-    encoded_image = base64.b64encode(image_bytes).decode("utf-8")
+    try:
+        # Read and encode image to base64
+        image_bytes = await file.read()
+        encoded_image = base64.b64encode(image_bytes).decode("utf-8")
+        print(f"Received image: {file.filename}, size: {len(image_bytes)} bytes")
 
-    # Send request to GPT-4 Vision
-    response = client.chat.completions.create(
-        model="gpt-4o",
-        messages=[
-            {
-                "role": "user",
-                "content": [
-                    {"type": "text", "text": "Evaluate this diagram."},
-                    {
-                        "type": "image_url",
-                        "image_url": {
-                            "url": f"data:image/png;base64,{encoded_image}"
+        # Send request to GPT-4 Vision
+        response = client.chat.completions.create(
+            model="gpt-4o",
+            messages=[
+                {
+                    "role": "user",
+                    "content": [
+                        {"type": "text", "text": "Evaluate this diagram."},
+                        {
+                            "type": "image_url",
+                            "image_url": {
+                                "url": f"data:image/png;base64,{encoded_image}"
+                            },
                         },
-                    },
-                ],
-            }
-        ],
-        max_tokens=500,
-    )
+                    ],
+                }
+            ],
+            max_tokens=500,
+        )
 
-    # Extract feedback
-    feedback = response.choices[0].message.content
-    return {"feedback": feedback}
+        # Extract feedback
+        feedback = response.choices[0].message.content
+        print(f"Feedback received: {feedback}")
+        return {"feedback": feedback}
+
+    except Exception as e:
+        print(f"Error during analysis: {str(e)}")
+        raise HTTPException(status_code=500, detail="AI analysis failed.")
