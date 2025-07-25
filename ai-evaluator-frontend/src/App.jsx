@@ -73,6 +73,8 @@ function App() {
             color: '#fff',
             borderRadius: '8px',
             maxWidth: '600px',
+            maxHeight: '60vh',
+            overflowY: 'auto',
             textAlign: 'left',
             fontSize: '1rem',
           }}
