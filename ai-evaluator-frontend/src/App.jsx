@@ -5,6 +5,7 @@ import { ReactSketchCanvas } from 'react-sketch-canvas';
 function App() {
   const [feedback, setFeedback] = useState('');
   const [tab, setTab] = useState('upload');
+  const [description, setDescription] = useState('');
   const canvasRef = useRef(null);
 
   const submitDrawing = async () => {
@@ -13,6 +14,7 @@ function App() {
       const blob = await fetch(dataUrl).then(res => res.blob());
       const formData = new FormData();
       formData.append('file', blob, 'drawing.png');
+      formData.append('description', description);
       const res = await fetch('http://localhost:8000/analyze', { method: 'POST', body: formData });
       const data = await res.json();
       alert('Canvas submitted successfully!');
@@ -29,6 +31,7 @@ function App() {
     if (!file) return;
     const formData = new FormData();
     formData.append('file', file);
+    formData.append('description', description);
     fetch('http://localhost:8000/analyze', {
       method: 'POST',
       body: formData,
@@ -101,6 +104,22 @@ function App() {
           <form onSubmit={submitImage}>
             <input type="file" accept="image/*" style={{ marginBottom: '10px' }} />
             <br />
+            <textarea
+              placeholder="Describe the diagram (optional)"
+              value={description}
+              onChange={(e) => setDescription(e.target.value)}
+              style={{
+                width: '100%',
+                height: '100px',
+                marginTop: '10px',
+                borderRadius: '8px',
+                padding: '10px',
+                border: '1px solid #444',
+                backgroundColor: '#1a1a1a',
+                color: '#fff'
+              }}
+            />
+            <br />
             <button
               type="submit"
               style={{ padding: '10px 20px', backgroundColor: '#3b82f6', color: '#fff', border: 'none', borderRadius: '5px', cursor: 'pointer', marginTop: '20px' }}
@@ -121,6 +140,21 @@ function App() {
               width="100%"
               height="300px"
               style={{ border: '1px dashed #444', borderRadius: '8px' }}
+            />
+            <textarea
+              placeholder="Describe the diagram (optional)"
+              value={description}
+              onChange={(e) => setDescription(e.target.value)}
+              style={{
+                width: '100%',
+                height: '100px',
+                marginTop: '20px',
+                borderRadius: '8px',
+                padding: '10px',
+                border: '1px solid #444',
+                backgroundColor: '#1a1a1a',
+                color: '#fff'
+              }}
             />
             <div style={{ marginTop: '20px' }}>
               <button

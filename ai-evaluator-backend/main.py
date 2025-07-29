@@ -1,4 +1,4 @@
-from fastapi import FastAPI, UploadFile, File, HTTPException
+from fastapi import FastAPI, UploadFile, File, Form, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from dotenv import load_dotenv
 from openai import OpenAI
@@ -37,12 +37,16 @@ async def test():
 
 # Image analysis route
 @app.post("/analyze")
-async def analyze_diagram(file: UploadFile = File(...)):
+async def analyze_diagram(
+    file: UploadFile = File(...),
+    description: str = Form("")
+):
     try:
         # Read and encode image to base64
         image_bytes = await file.read()
         encoded_image = base64.b64encode(image_bytes).decode("utf-8")
         print(f"Received image: {file.filename}, size: {len(image_bytes)} bytes")
+        print(f"Description: {description}")
 
         # Send request to GPT-4 Vision
         response = client.chat.completions.create(
@@ -51,7 +55,7 @@ async def analyze_diagram(file: UploadFile = File(...)):
                 {
                     "role": "user",
                     "content": [
-                        {"type": "text", "text": "Evaluate this diagram."},
+                        {"type": "text", "text": f"Evaluate this diagram. Description: {description.strip()}"},
                         {
                             "type": "image_url",
                             "image_url": {
