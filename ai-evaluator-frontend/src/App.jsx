@@ -58,9 +58,22 @@ function App() {
         alignItems: 'center',
         padding: '40px 20px',
         fontFamily: 'Inter, sans-serif',
-        boxSizing: 'border-box'
+        boxSizing: 'border-box',
+        position: 'relative',
       }}
     >
+      {/* Berribot Logo in Top-Left */}
+      <img
+        src="/berribot.jpeg"
+        alt="Berribot Logo"
+        style={{
+          position: 'absolute',
+          top: '20px',
+          left: '20px',
+          height: '40px',
+        }}
+      />
+
       <h1 style={{ fontSize: '2.5rem', fontWeight: 'bold', color: '#60a5fa', textAlign: 'center' }}>
         AI Evaluator for Technical Diagrams
       </h1>

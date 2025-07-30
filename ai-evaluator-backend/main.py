@@ -48,6 +48,14 @@ async def analyze_diagram(
         print(f"Received image: {file.filename}, size: {len(image_bytes)} bytes")
         print(f"Description: {description}")
 
+        # Construct enhanced prompt
+        prompt_text = (
+            "You are an expert in evaluating technical diagrams. "
+            "First, analyze and describe what this diagram appears to depict based on the image alone. "
+            f"Then, consider the user-provided description (if any): {description.strip()} "
+            "Finally, provide detailed, constructive suggestions for improving the clarity, layout, structure, and completeness of the diagram."
+        )
+
         # Send request to GPT-4 Vision
         response = client.chat.completions.create(
             model="gpt-4o",
@@ -55,7 +63,7 @@ async def analyze_diagram(
                 {
                     "role": "user",
                     "content": [
-                        {"type": "text", "text": f"Evaluate this diagram. Description: {description.strip()}"},
+                        {"type": "text", "text": prompt_text},
                         {
                             "type": "image_url",
                             "image_url": {
@@ -65,7 +73,7 @@ async def analyze_diagram(
                     ],
                 }
             ],
-            max_tokens=500,
+            max_tokens=700,
         )
 
         # Extract feedback
