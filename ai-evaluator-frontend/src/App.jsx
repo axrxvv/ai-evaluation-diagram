@@ -148,8 +148,8 @@ function App() {
             <ReactSketchCanvas
               ref={canvasRef}
               strokeWidth={2}
-              strokeColor="white"
-              canvasColor="#1a1a1a"
+              strokeColor="green"
+              canvasColor="#faf5f5ff"
               width="100%"
               height="300px"
               style={{ border: '1px dashed #444', borderRadius: '8px' }}
