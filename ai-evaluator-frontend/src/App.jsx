@@ -1,6 +1,7 @@
 import React, { useState, useRef } from 'react';
 import ReactMarkdown from 'react-markdown';
 import { ReactSketchCanvas } from 'react-sketch-canvas';
+import './App.css'
 
 function App() {
   const [feedback, setFeedback] = useState('');
@@ -52,11 +53,10 @@ function App() {
       style={{
         minHeight: '100vh',
         width: '100vw',
-        backgroundColor: '#0e0e0e',
+        backgroundColor: '#ffffffff',
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'center',
-        padding: '40px 20px',
         fontFamily: 'Inter, sans-serif',
         boxSizing: 'border-box',
         position: 'relative',
@@ -74,20 +74,20 @@ function App() {
         }}
       />
 
-      <h1 style={{ fontSize: '2.5rem', fontWeight: 'bold', color: '#60a5fa', textAlign: 'center' }}>
+      <h1 style={{ fontSize: '2.5rem', fontWeight: 'bold', color: '#0a9586', textAlign: 'center' }}>
         AI Evaluator for Technical Diagrams
       </h1>
-      <p style={{ maxWidth: '1200px', textAlign: 'center', margin: '1rem 0', color: '#d1d5db' }}>
+      <p style={{ maxWidth: '1200px', textAlign: 'center', margin: '1rem 0', color: '#7d7d7eff' }}>
         Upload your technical diagram or draw it directly to get instant AI-powered feedback and suggestions for improvement.
       </p>
 
-      <div style={{ display: 'flex', width: '100%', maxWidth: '1200px', backgroundColor: '#1f2937', borderRadius: '8px', overflow: 'hidden', marginBottom: '30px' }}>
+      <div style={{ display: 'flex', width: '100%', maxWidth: '1200px', borderRadius: '8px', boxShadow: '0 4px 30px rgba(0, 0, 0, 0.2)', overflow: 'hidden', marginBottom: '30px' }}>
         <button
           onClick={() => setTab('upload')}
           style={{
             flex: 1,
             padding: '12px',
-            backgroundColor: tab === 'upload' ? '#111827' : '#1f2937',
+            backgroundColor: tab === 'upload' ? '#06685eff' : '#0a9586',
             color: '#fff',
             border: 'none',
             cursor: 'pointer',
@@ -101,7 +101,7 @@ function App() {
           style={{
             flex: 1,
             padding: '12px',
-            backgroundColor: tab === 'draw' ? '#111827' : '#1f2937',
+            backgroundColor: tab === 'draw' ? '#06685eff' : '#0a9586',
             color: '#fff',
             border: 'none',
             cursor: 'pointer',
@@ -112,10 +112,10 @@ function App() {
         </button>
       </div>
 
-      <div style={{ backgroundColor: '#111827', padding: '40px 20px', borderRadius: '10px', width: '100%', maxWidth: '1200px', boxShadow: '0 4px 30px rgba(0, 0, 0, 0.2)', marginBottom: '30px', textAlign: 'center' }}>
+      <div style={{ backgroundColor: '#ffffffff', padding: '20px', borderRadius: '10px', width: '100%', maxWidth: '1200px', boxShadow: '0 4px 30px rgba(0, 0, 0, 0.2)', marginBottom: '30px', textAlign: 'center' }}>
         {tab === 'upload' && (
           <form onSubmit={submitImage}>
-            <input type="file" accept="image/*" style={{ marginBottom: '10px' }} />
+            <input type="file" accept="image/*" style={{ marginBottom: '10px', border: '1px solid #0a9586', color: '#0a9586', borderRadius: '20px' }} />
             <br />
             <textarea
               placeholder="Describe the diagram (optional)"
@@ -127,15 +127,15 @@ function App() {
                 marginTop: '10px',
                 borderRadius: '8px',
                 padding: '10px',
-                border: '1px solid #444',
-                backgroundColor: '#1a1a1a',
-                color: '#fff'
+                border: '1px solid #0a9586',
+                backgroundColor: '#ffffffff',
+                color: '#7d7d7eff'
               }}
             />
             <br />
             <button
               type="submit"
-              style={{ padding: '10px 20px', backgroundColor: '#3b82f6', color: '#fff', border: 'none', borderRadius: '5px', cursor: 'pointer', marginTop: '20px' }}
+              style={{ padding: '10px 20px', backgroundColor: '#0a9586', color: '#fff', border: 'none', borderRadius: '5px', cursor: 'pointer', marginTop: '20px' }}
             >
               Upload and Analyze
             </button>
@@ -144,11 +144,11 @@ function App() {
 
         {tab === 'draw' && (
           <>
-            <h2 style={{ marginBottom: '20px', color: '#93c5fd' }}>Draw your diagram</h2>
+            <h2 style={{ marginBottom: '20px', color: '#0a9586' }}>Draw your diagram</h2>
             <ReactSketchCanvas
               ref={canvasRef}
               strokeWidth={2}
-              strokeColor="green"
+              strokeColor="#0a9586"
               canvasColor="#faf5f5ff"
               width="100%"
               height="300px"
@@ -165,20 +165,20 @@ function App() {
                 borderRadius: '8px',
                 padding: '10px',
                 border: '1px solid #444',
-                backgroundColor: '#1a1a1a',
-                color: '#fff'
+                backgroundColor: '#ffffffff',
+                color: '#7d7d7eff'
               }}
             />
             <div style={{ marginTop: '20px' }}>
               <button
                 onClick={submitDrawing}
-                style={{ marginRight: '10px', padding: '10px 20px', backgroundColor: '#3b82f6', color: '#fff', border: 'none', borderRadius: '5px', cursor: 'pointer' }}
+                style={{ marginRight: '10px', padding: '10px 20px', backgroundColor: '#0a9586', color: '#fff', border: 'none', borderRadius: '5px', cursor: 'pointer' }}
               >
                 Submit Drawing
               </button>
               <button
                 onClick={() => canvasRef.current.clearCanvas()}
-                style={{ padding: '10px 20px', backgroundColor: '#374151', color: '#fff', border: 'none', borderRadius: '5px', cursor: 'pointer' }}
+                style={{ padding: '10px 20px', backgroundColor: '#8b0707ff', color: '#fff', border: 'none', borderRadius: '5px', cursor: 'pointer' }}
               >
                 Clear Canvas
               </button>
