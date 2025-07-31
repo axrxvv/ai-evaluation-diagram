@@ -70,7 +70,7 @@ function App() {
           position: 'absolute',
           top: '20px',
           left: '20px',
-          height: '40px',
+          width: '5rem',
         }}
       />
 
@@ -122,7 +122,7 @@ function App() {
               value={description}
               onChange={(e) => setDescription(e.target.value)}
               style={{
-                width: '100%',
+                width: '95%',
                 height: '100px',
                 marginTop: '10px',
                 borderRadius: '8px',
@@ -159,12 +159,12 @@ function App() {
               value={description}
               onChange={(e) => setDescription(e.target.value)}
               style={{
-                width: '100%',
+                width: '95%',
                 height: '100px',
-                marginTop: '20px',
+                marginTop: '10px',
                 borderRadius: '8px',
                 padding: '10px',
-                border: '1px solid #444',
+                border: '1px solid #0a9586',
                 backgroundColor: '#ffffffff',
                 color: '#7d7d7eff'
               }}
@@ -191,22 +191,23 @@ function App() {
         <div
           style={{
             padding: '30px',
-            backgroundColor: '#1f2937',
-            color: '#fff',
+            backgroundColor: '#ffffffff',
+            color: '#7d7d7eff',
             borderRadius: '10px',
             width: '100%',
             maxWidth: '1200px',
             maxHeight: '60vh',
             overflowY: 'auto',
             textAlign: 'left',
-            fontSize: '1rem'
+            fontSize: '1rem',
+            boxShadow: '0 4px 30px rgba(0, 0, 0, 0.2)'
           }}
         >
-          <h3 style={{ marginBottom: '10px', color: '#93c5fd' }}>AI Feedback:</h3>
+          <h3 style={{ marginBottom: '10px', color: '#0a9586' }}>AI Feedback:</h3>
           <ReactMarkdown>{feedback}</ReactMarkdown>
           <button
             onClick={() => setFeedback('')}
-            style={{ marginTop: '15px', padding: '8px 16px', backgroundColor: '#374151', color: '#fff', border: 'none', borderRadius: '5px', cursor: 'pointer' }}
+            style={{ marginTop: '15px', padding: '8px 16px', backgroundColor: '#0a9586', color: '#fff', border: 'none', borderRadius: '5px', cursor: 'pointer' }}
           >
             Clear Feedback
           </button>

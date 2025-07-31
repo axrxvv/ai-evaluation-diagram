@@ -54,6 +54,7 @@ async def analyze_diagram(
             "First, analyze and describe what this diagram appears to depict based on the image alone. "
             f"Then, consider the user-provided description (if any): {description.strip()} "
             "Finally, provide detailed, constructive suggestions for improving the clarity, layout, structure, and completeness of the diagram."
+            "Evaluate the diagram out of 100, and return as Total Score: <score>/100"
         )
 
         # Send request to GPT-4 Vision
